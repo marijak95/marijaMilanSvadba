@@ -74,23 +74,25 @@
       position: absolute;
       inset: 0;
       background-size: cover;
-      background-position: center top;
+      background-position: center center;
       background-repeat: no-repeat;
-      filter: saturate(0.5) brightness(0.8);
+      filter: saturate(0.5) brightness(0.5);
       opacity: 0;
       animation: heroFade 18s infinite;
     }
 
     .hero-slide:nth-child(1) {
-      background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1400&q=80');
+      background-image: url('./images/img1.jpg');
+      background-position: center center;
       animation-delay: 0s;
     }
     .hero-slide:nth-child(2) {
-      background-image: url('https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1400&q=80');
+      background-image: url('./images/img2.JPG');
       animation-delay: 6s;
     }
     .hero-slide:nth-child(3) {
-      background-image: url('https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=1400&q=80');
+      background-image: url('./images/img3.JPG');
+      background-position: center center;
       animation-delay: 12s;
     }
 
@@ -127,6 +129,38 @@
     .hero-bg .header .header-date { color: #fff; border-color: rgba(255,255,255,0.35); }
     .hero-bg .header .location-name { color: #9e7e5a; font-size: 1.5rem; text-shadow: 0 0 12px rgba(255,255,255,0.9), 0 0 4px rgba(255,255,255,0.6); }
     .hero-bg .header .location-address { color: #7d6245; text-shadow: 0 0 10px rgba(255,255,255,0.85), 0 0 4px rgba(255,255,255,0.5); }
+
+    .header h1 {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(2.4rem, 10vw, 7rem);
+      line-height: 0.95;
+      color: var(--color-text);
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .header h1 .amp {
+      display: inline;
+      font-style: italic;
+      color: var(--color-gold);
+      font-size: 0.6em;
+      margin: 0 0.1em;
+      position: relative;
+    }
+
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.5rem auto 0;
+      color: var(--color-gold-light);
+      width: 100%;
+    }
 
     /* ---------- FLORAL CORNERS ---------- */
     .floral-corner {
@@ -216,8 +250,8 @@
     .header-sub {
       max-width: 420px;
       font-family: var(--font-display);
-      font-size: 1.2rem;
-      font-weight: 300;
+      font-size: 1.4rem;
+      font-weight: 500;
       color: var(--color-muted);
       margin: 0 auto;
       line-height: 1.9;
@@ -263,6 +297,75 @@
       color: var(--color-muted);
     }
 
+        /* ---------- COUNTDOWN TIMER ---------- */
+    .countdown-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+      position: relative;
+      z-index: 1;
+      flex-wrap: wrap;
+    }
+
+    .countdown-item {
+      text-align: center;
+      min-width: 70px;
+    }
+
+    .countdown-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
+      text-align: center;
+      width: 100%;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.05em;
+      font-style: italic;
+    }
+
+    @media (max-width: 600px) {
+      .countdown-title { font-size: 1.1rem; margin-bottom: 1rem; }
+    }
+
+    @media (max-width: 380px) {
+      .countdown-title { font-size: 0.95rem; margin-bottom: 0.8rem; }
+    }
+
+    .countdown-number {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .countdown-label {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+    }
+
+    @media (max-width: 600px) {
+      .countdown-wrapper { gap: 1rem; margin-top: 2rem; }
+      .countdown-item { min-width: 60px; }
+      .countdown-number { font-size: 1.8rem; }
+      .countdown-label { font-size: 0.75rem; }
+    }
+
+    @media (max-width: 380px) {
+      .countdown-wrapper { gap: 0.8rem; margin-top: 1.5rem; }
+      .countdown-item { min-width: 50px; }
+      .countdown-number { font-size: 1.4rem; }
+      .countdown-label { font-size: 0.7rem; }
+    }
+
     .page-content {
       width: 100%;
       display: flex;
@@ -280,7 +383,7 @@
       justify-content: center;
       gap: 3rem;
       flex-wrap: wrap;
-      margin-bottom: 2.5rem;
+      margin-bottom: 3rem;
       width: 100%;
       max-width: 560px;
     }
@@ -291,20 +394,21 @@
     }
 
     .event-item-icon {
-      font-size: 1.5rem;
-      margin-bottom: 0.4rem;
+      font-size: 2.2rem;
+      margin-bottom: 0.6rem;
     }
 
     .event-item-title {
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 1.1rem;
       color: var(--color-text);
       letter-spacing: 0.06em;
+      margin-bottom: 0.3rem;
     }
 
     .event-item-detail {
-      font-size: 0.95rem;
-      font-weight: 300;
+      font-size: 1.15rem;
+      font-weight: 600;
       color: var(--color-muted);
       font-style: italic;
       line-height: 1.5;
@@ -315,6 +419,112 @@
       background: var(--color-border);
       align-self: stretch;
       margin: 0.3rem 0;
+    }
+
+    @media (max-width: 600px) {
+      .event-info { gap: 2rem; margin-bottom: 2.5rem; }
+      .event-item-icon { font-size: 1.8rem; }
+      .event-item-title { font-size: 0.95rem; }
+      .event-item-detail { font-size: 0.95rem; }
+    }
+
+    @media (max-width: 380px) {
+      .event-info { gap: 1.5rem; }
+      .event-item-icon { font-size: 1.6rem; }
+      .event-item-title { font-size: 0.88rem; }
+      .event-item-detail { font-size: 0.9rem; }
+    }
+
+    /* ---------- LOCATION SECTION ---------- */
+    .location-section {
+      width: 100%;
+      max-width: 560px;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .location-section h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.6rem;
+      color: var(--color-text);
+      letter-spacing: 0.05em;
+      margin-bottom: 1.2rem;
+    }
+
+    .location-section iframe {
+      border-radius: 4px;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    @media (max-width: 600px) {
+      .location-section {
+        margin-bottom: 2.5rem;
+      }
+      .location-section h2 {
+        font-size: 1.3rem;
+      }
+      .location-section iframe {
+        height: 300px !important;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .location-section iframe {
+        height: 250px !important;
+      }
+    }
+
+    /* ---------- ADD TO CALENDAR ---------- */
+    .add-to-calendar {
+      text-align: center;
+      margin-top: 1.8rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .add-to-calendar p {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 0.8rem;
+      font-style: italic;
+    }
+
+    .calendar-links {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .calendar-btn {
+      display: inline-block;
+      padding: 0.6rem 1.4rem;
+      font-size: 0.8rem;
+      font-family: var(--font-sans);
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 20px;
+      transition: all 0.2s;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.9);
+      cursor: pointer;
+    }
+
+    .calendar-btn:hover {
+      border-color: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 600px) {
+      .add-to-calendar { margin-top: 1.2rem; }
+      .add-to-calendar p { font-size: 0.85rem; }
+      .calendar-links { gap: 0.6rem; }
+      .calendar-btn { padding: 0.5rem 1.2rem; font-size: 0.75rem; }
     }
 
     /* ---------- FORM TITLE ---------- */
@@ -581,6 +791,50 @@
       letter-spacing: 0.05em;
     }
 
+    .p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      letter-spacing: 0.02em;
+    }
+
+    .header-sub {
+      max-width: 420px;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--color-muted);
+      margin: 0 auto;
+      line-height: 1.9;
+      font-style: italic;
+    }
+
+    .form-title p {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.05rem;
+      color: var(--color-muted);
+      margin-top: 0.3rem;
+      line-height: 1.8;
+    }
+
+    .form-success p {
+      color: var(--color-muted);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.2rem;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 600px) {
+      p { font-size: 0.95rem; }
+      .header-sub { font-size: 1.2rem; }
+    }
+
+    @media (max-width: 380px) {
+      p { font-size: 0.9rem; line-height: 1.7; }
+    }
+
     /* ---------- ANIMATIONS ---------- */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -713,7 +967,38 @@
           <span class="location-address">Petrovaradin, Bukovački put 100</span>
         </p>
       </div>
+      <!-- Countdown Timer -->
+      <div class="countdown-wrapper">
+         <div class="countdown-title">Do našeg velikog dana je ostalo još:</div>
+        <div class="countdown-item">
+          <div class="countdown-number" id="days">0</div>
+          <div class="countdown-label">Dana</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-number" id="hours">0</div>
+          <div class="countdown-label">Sati</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-number" id="minutes">0</div>
+          <div class="countdown-label">Minuta</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-number" id="seconds">0</div>
+          <div class="countdown-label">Sekundi</div>
+        </div>
+      </div>
+      <!-- Add to Calendar -->
+      <div class="add-to-calendar">
+          <div class="calendar-links">
+            <a href="data:text/calendar;charset=utf-8,BEGIN:VCALENDAR%0AVERSION:2.0%0APRODID:-//Wedding//Marija%20%26%20Milan//EN%0ACALSCALE:GREGORIAN%0AMETHOD:PUBLISH%0AX-WR-CALNAME:Venčanje%0AX-WR-TIMEZONE:Europe/Belgrade%0AX-WR-CALDESC:Venčanje%20Marije%20i%20Milana%0ABEGIN:VEVENT%0ADTSTART:20260620T163000%0ADTEND:20260620T233000%0ADTSAMP:20260320T120000Z%0AUID:wedding-marija-milan@example.com%0ACREATED:20260320T120000Z%0ADESCRIPTION:ISKRA%20svečana%20sala%2C%20Petrovaradin%2C%20Bukovački%20put%20100%0ALOCATION:ISKRA%20svečana%20sala%2C%20Petrovaradin%0ASEQUENCE:0%0ASTATUS:CONFIRMED%0ASUMMARY:Venčanje%20Marije%20i%20Milana%0ATRANSP:OPAQUE%0AEND:VEVENT%0AEND:VCALENDAR" download="vencanje-marija-milan.ics" class="calendar-btn">Dodaj u kalendar</a>
+          </div>
+      </div>
+      
     </div>
+      
+    
+
+    
 
     <div class="page-content">
     <div class="event-info">
@@ -729,6 +1014,12 @@
         <div class="event-item-detail">17:30h</div>
       </div>
     </div>
+
+    <!-- Google Maps Section -->
+      <div class="location-section">
+        <h2>Lokacija</h2>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d888.2516003019175!2d19.890177013834485!3d45.21871403212545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475b0500465ae98b%3A0xb6dd3343703aaabb!2sIskra%20Event%20Centar!5e0!3m2!1sen!2srs!4v1774297507956!5m2!1sen!2srs" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
 
     <div class="form-title">
       <h2>Molimo Vas da potvrdite svoj dolazak</h2>
@@ -903,6 +1194,25 @@
         alert('Došlo je do greške. Proverite internet konekciju.');
       }
     });
+
+    // Countdown Timer
+    function updateCountdown() {
+      const eventDate = new Date('2026-06-20T00:00:00').getTime();
+      const now = new Date().getTime();
+      const distance = eventDate - now;
+
+      if (distance > 0) {
+        document.getElementById('days').textContent = Math.floor(distance / (1000 * 60 * 60 * 24));
+        document.getElementById('hours').textContent = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        document.getElementById('minutes').textContent = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        document.getElementById('seconds').textContent = Math.floor((distance % (1000 * 60)) / 1000);
+      } else {
+        document.querySelector('.countdown-wrapper').innerHTML = '<p style="color: #fff; font-family: var(--font-display); font-size: 1.2rem;">Venčanje je stiglo! 🎉</p>';
+      }
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
   </script>
 </body>
 </html>
