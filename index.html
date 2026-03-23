@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marija & Milan — Venčanje</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --color-bg: #f9f6f1;
+      --color-bg-warm: #f3ede4;
+      --color-text: #2c2c2c;
+      --color-accent: #9e7e5a;
+      --color-accent-dark: #7d6245;
+      --color-accent-light: #c4a882;
+      --color-gold: #b8975a;
+      --color-gold-light: #d4bc8e;
+      --color-muted: #8a8078;
+      --color-card: #fffefb;
+      --color-border: #e4dbd0;
+      --color-floral: #b8975a;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 20%, rgba(184, 151, 90, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 80%, rgba(184, 151, 90, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 0 2rem;
+    }
+
+    .hero-bg {
+      width: 100%;
+      position: relative;
+      padding: 5rem 1.5rem 8rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      filter: saturate(0.5) brightness(0.8);
+      opacity: 0;
+      animation: heroFade 18s infinite;
+    }
+
+    .hero-slide:nth-child(1) {
+      background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1400&q=80');
+      animation-delay: 0s;
+    }
+    .hero-slide:nth-child(2) {
+      background-image: url('https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1400&q=80');
+      animation-delay: 6s;
+    }
+    .hero-slide:nth-child(3) {
+      background-image: url('https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=1400&q=80');
+      animation-delay: 12s;
+    }
+
+    @keyframes heroFade {
+      0%      { opacity: 0; }
+      5%      { opacity: 1; }
+      33.33%  { opacity: 1; }
+      38.33%  { opacity: 0; }
+      100%    { opacity: 0; }
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 80%;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        rgba(253,251,247,0.03) 10%,
+        rgba(253,251,247,0.1) 25%,
+        rgba(253,251,247,0.25) 40%,
+        rgba(253,251,247,0.5) 55%,
+        rgba(253,251,247,0.75) 70%,
+        rgba(253,251,247,0.92) 85%,
+        var(--color-bg) 100%
+      );
+    }
+
+    .hero-bg .header h1 { color: #fff; }
+    .hero-bg .header h1 .amp { color: #fff; opacity: 0.85; }
+    .hero-bg .header .ornament { color: rgba(255,255,255,0.6); }
+    .hero-bg .header .ornament-line { background: rgba(255,255,255,0.4); }
+    .hero-bg .header .header-sub { color: rgba(255,255,255,0.85); }
+    .hero-bg .header .header-date { color: #fff; border-color: rgba(255,255,255,0.35); }
+    .hero-bg .header .location-name { color: #9e7e5a; font-size: 1.5rem; text-shadow: 0 0 12px rgba(255,255,255,0.9), 0 0 4px rgba(255,255,255,0.6); }
+    .hero-bg .header .location-address { color: #7d6245; text-shadow: 0 0 10px rgba(255,255,255,0.85), 0 0 4px rgba(255,255,255,0.5); }
+
+    /* ---------- FLORAL CORNERS ---------- */
+    .floral-corner {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .floral-tl {
+      top: 0; left: 0;
+      width: clamp(140px, 22vw, 280px);
+      height: auto;
+      opacity: 0.18;
+    }
+
+    .floral-br {
+      bottom: 0; right: 0;
+      width: clamp(140px, 22vw, 280px);
+      height: auto;
+      opacity: 0.18;
+      transform: rotate(180deg);
+    }
+
+    .floral-tr {
+      top: 0; right: 0;
+      width: clamp(100px, 15vw, 180px);
+      height: auto;
+      opacity: 0.10;
+      transform: scaleX(-1);
+    }
+
+    .floral-bl {
+      bottom: 0; left: 0;
+      width: clamp(100px, 15vw, 180px);
+      height: auto;
+      opacity: 0.10;
+      transform: scaleX(-1) rotate(180deg);
+    }
+
+    /* ---------- HEADER ---------- */
+    .header {
+      text-align: center;
+      margin-bottom: 0;
+      max-width: 560px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header h1 {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(2.4rem, 10vw, 7rem);
+      line-height: 0.95;
+      color: var(--color-text);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .header h1 .amp {
+      display: inline;
+      font-style: italic;
+      color: var(--color-gold);
+      font-size: 0.6em;
+      margin: 0 0.1em;
+    }
+
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.5rem auto;
+      color: var(--color-gold-light);
+    }
+
+    .ornament-line {
+      width: 50px;
+      height: 1px;
+      background: var(--color-gold-light);
+    }
+
+    .ornament-icon {
+      font-size: 0.7rem;
+      opacity: 0.7;
+    }
+
+    .header-sub {
+      max-width: 420px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: var(--color-muted);
+      margin: 0 auto;
+      line-height: 1.9;
+      font-style: italic;
+    }
+
+    .header-date {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--color-gold);
+      margin-top: 1.8rem;
+      padding: 0.6rem 2rem;
+      border-top: 1px solid var(--color-gold-light);
+      border-bottom: 1px solid var(--color-gold-light);
+      display: inline-block;
+    }
+
+    .header-location {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--color-text);
+      margin-top: 1.4rem;
+      line-height: 1.7;
+      letter-spacing: 0.06em;
+    }
+
+    .header-location .location-name {
+      font-weight: 600;
+      font-size: 1.4rem;
+      color: var(--color-gold);
+      display: block;
+      margin-bottom: 0.2rem;
+      letter-spacing: 0.04em;
+    }
+
+    .header-location .location-address {
+      font-weight: 400;
+      font-style: italic;
+      font-size: 1.08rem;
+      color: var(--color-muted);
+    }
+
+    .page-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 1.5rem;
+      margin-top: -3rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ---------- EVENT INFO ---------- */
+    .event-info {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+      width: 100%;
+      max-width: 560px;
+    }
+
+    .event-item {
+      text-align: center;
+      font-family: var(--font-display);
+    }
+
+    .event-item-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .event-item-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--color-text);
+      letter-spacing: 0.06em;
+    }
+
+    .event-item-detail {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--color-muted);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .event-divider {
+      width: 1px;
+      background: var(--color-border);
+      align-self: stretch;
+      margin: 0.3rem 0;
+    }
+
+    /* ---------- FORM TITLE ---------- */
+    .form-title {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-title h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.6rem;
+      color: var(--color-text);
+      letter-spacing: 0.05em;
+    }
+
+    .form-title p {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 0.95rem;
+      color: var(--color-muted);
+      margin-top: 0.3rem;
+    }
+
+    /* ---------- FORM CARD ---------- */
+    .rsvp-form {
+      width: 100%;
+      max-width: 540px;
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: 2.5rem 2rem;
+      position: relative;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .rsvp-form::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid var(--color-border);
+      border-radius: 2px;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--color-text);
+      letter-spacing: 0.03em;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border: 1px solid var(--color-border);
+      border-radius: 3px;
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      background: var(--color-bg);
+      color: var(--color-text);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(158, 126, 90, 0.08);
+    }
+
+    .form-group textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .radio-option {
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .radio-option input { display: none; }
+
+    .radio-option label {
+      display: block;
+      text-align: center;
+      padding: 0.65rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-size: 0.85rem;
+      font-weight: 400;
+      background: var(--color-bg);
+    }
+
+    .radio-option label:hover {
+      border-color: var(--color-accent-light);
+    }
+
+    .radio-option input:checked + label {
+      border-color: var(--color-accent);
+      background: var(--color-accent);
+      color: #fff;
+    }
+
+    .pill-group {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .pill-group .radio-option {
+      flex: unset;
+      min-width: unset;
+    }
+
+    .pill-group .radio-option label {
+      padding: 0.5rem 0.95rem;
+      font-size: 0.82rem;
+      min-width: 42px;
+    }
+
+    .guests-section { display: none; }
+    .guests-section.visible { display: block; }
+
+    .guest-block {
+      padding-top: 1.2rem;
+      margin-top: 1.2rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .guest-block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .guest-block-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    .child-check {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      font-size: 0.8rem;
+      color: var(--color-muted);
+    }
+
+    .child-check input[type="checkbox"] {
+      width: auto;
+      accent-color: var(--color-accent);
+      cursor: pointer;
+    }
+
+    .meal-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .meal-options .radio-option {
+      flex: unset;
+      min-width: unset;
+    }
+
+    .meal-options .radio-option label {
+      padding: 0.45rem 0.85rem;
+      font-size: 0.78rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2.4rem;
+      border: none;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      border-radius: 3px;
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-accent-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(158, 126, 90, 0.25);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    .form-success.visible { display: block; }
+
+    .form-success .checkmark {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--color-gold);
+    }
+
+    .form-success h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 0.75rem;
+    }
+
+    .form-success p {
+      color: var(--color-muted);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.1rem;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2.5rem 1.5rem 1.5rem;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--color-accent-light);
+      letter-spacing: 0.05em;
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .header { animation: fadeUp 1s ease-out; }
+    .event-info { animation: fadeUp 1s ease-out 0.2s both; }
+    .form-title { animation: fadeUp 1s ease-out 0.35s both; }
+    .rsvp-form { animation: fadeUp 1s ease-out 0.5s both; }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 600px) {
+      .page { padding: 0 0 1.5rem; }
+      .page-content { padding: 0 1rem; }
+      .hero-bg { padding: 3rem 1rem 2rem; }
+      .rsvp-form { padding: 1.8rem 1.2rem; }
+      .rsvp-form::before { inset: 4px; }
+      .header { margin-bottom: 2rem; }
+      .header h1 { font-size: clamp(1.8rem, 9vw, 4rem); white-space: normal; text-align: center; }
+      .header-sub { font-size: 1.05rem; line-height: 1.7; }
+      .header-date { font-size: 1.4rem; padding: 0.5rem 1.5rem; margin-top: 1.3rem; }
+      .ornament { margin: 1rem auto; }
+      .event-info { gap: 2rem; }
+      .event-divider { display: none; }
+      .event-item-title { font-size: 0.88rem; }
+      .event-item-detail { font-size: 0.88rem; }
+      .form-title h2 { font-size: 1.3rem; }
+      .form-group label { font-size: 0.92rem; }
+      .pill-group { gap: 0.4rem; }
+      .pill-group .radio-option label { padding: 0.5rem 0.8rem; font-size: 0.78rem; min-width: 38px; }
+      .meal-options { gap: 0.4rem; }
+      .meal-options .radio-option label { padding: 0.42rem 0.7rem; font-size: 0.75rem; }
+      .guest-block-title { font-size: 0.95rem; }
+      .child-check { font-size: 0.75rem; }
+      .floral-corner { opacity: 0.08 !important; }
+      .footer { padding: 1.5rem 1rem 1rem; }
+    }
+
+    @media (max-width: 380px) {
+      .header h1 { font-size: clamp(1.8rem, 10vw, 3rem); }
+      .header-date { font-size: 1.2rem; letter-spacing: 0.1em; padding: 0.45rem 1.2rem; }
+      .radio-group { flex-direction: column; }
+      .radio-option { min-width: unset; }
+      .event-info { flex-direction: column; align-items: center; gap: 1.2rem; }
+      .rsvp-form { padding: 1.5rem 1rem; }
+      .btn-submit { font-size: 0.9rem; padding: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floral corner: top-left -->
+  <svg class="floral-corner floral-tl" viewBox="0 0 300 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="var(--color-floral)" stroke-width="0.8" fill="none" opacity="0.9">
+      <path d="M0 0 C40 60 30 120 50 180 C65 220 90 240 120 260 C150 280 170 310 180 350"/>
+      <path d="M50 180 C30 170 10 150 5 125 C0 100 20 85 40 95 C55 102 55 125 50 180" fill="var(--color-floral)" fill-opacity="0.06"/>
+      <path d="M50 180 C70 165 95 155 110 130 C120 112 108 95 90 100 C75 104 65 130 50 180" fill="var(--color-floral)" fill-opacity="0.06"/>
+      <path d="M120 260 C100 250 80 235 75 215 C70 195 85 185 100 195 C112 202 115 225 120 260" fill="var(--color-floral)" fill-opacity="0.05"/>
+      <path d="M120 260 C140 248 160 240 170 220 C178 205 168 190 152 195 C140 200 132 225 120 260" fill="var(--color-floral)" fill-opacity="0.05"/>
+      <path d="M0 0 C20 30 15 70 20 110 C22 130 30 145 42 155"/>
+      <path d="M20 110 C5 105 -8 90 -5 72 C-2 55 15 50 25 60 C32 67 28 88 20 110" fill="var(--color-floral)" fill-opacity="0.05"/>
+      <path d="M20 110 C35 98 52 90 60 72 C66 58 55 46 42 52 C32 57 28 78 20 110" fill="var(--color-floral)" fill-opacity="0.05"/>
+      <circle cx="50" cy="178" r="4" fill="var(--color-floral)" fill-opacity="0.12"/>
+      <circle cx="120" cy="258" r="3.5" fill="var(--color-floral)" fill-opacity="0.12"/>
+      <circle cx="20" cy="108" r="3" fill="var(--color-floral)" fill-opacity="0.10"/>
+      <path d="M80 310 C70 300 65 285 70 270 C75 258 88 262 86 275 C85 285 82 298 80 310" fill="var(--color-floral)" fill-opacity="0.04"/>
+      <path d="M140 290 C155 280 165 268 160 252 C156 240 143 242 142 255 C141 264 140 278 140 290" fill="var(--color-floral)" fill-opacity="0.04"/>
+      <path d="M10 40 C-5 35 -15 22 -10 10 C-5 0 8 2 12 12 C15 20 12 32 10 40" fill="var(--color-floral)" fill-opacity="0.04"/>
+    </g>
+  </svg>
+
+  <!-- Floral corner: bottom-right -->
+  <svg class="floral-corner floral-br" viewBox="0 0 300 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="var(--color-floral)" stroke-width="0.8" fill="none" opacity="0.9">
+      <path d="M0 0 C40 60 30 120 50 180 C65 220 90 240 120 260 C150 280 170 310 180 350"/>
+      <path d="M50 180 C30 170 10 150 5 125 C0 100 20 85 40 95 C55 102 55 125 50 180" fill="var(--color-floral)" fill-opacity="0.06"/>
+      <path d="M50 180 C70 165 95 155 110 130 C120 112 108 95 90 100 C75 104 65 130 50 180" fill="var(--color-floral)" fill-opacity="0.06"/>
+      <path d="M120 260 C100 250 80 235 75 215 C70 195 85 185 100 195 C112 202 115 225 120 260" fill="var(--color-floral)" fill-opacity="0.05"/>
+      <path d="M120 260 C140 248 160 240 170 220 C178 205 168 190 152 195 C140 200 132 225 120 260" fill="var(--color-floral)" fill-opacity="0.05"/>
+      <path d="M0 0 C20 30 15 70 20 110 C22 130 30 145 42 155"/>
+      <path d="M20 110 C5 105 -8 90 -5 72 C-2 55 15 50 25 60 C32 67 28 88 20 110" fill="var(--color-floral)" fill-opacity="0.05"/>
+      <path d="M20 110 C35 98 52 90 60 72 C66 58 55 46 42 52 C32 57 28 78 20 110" fill="var(--color-floral)" fill-opacity="0.05"/>
+      <circle cx="50" cy="178" r="4" fill="var(--color-floral)" fill-opacity="0.12"/>
+      <circle cx="120" cy="258" r="3.5" fill="var(--color-floral)" fill-opacity="0.12"/>
+      <circle cx="20" cy="108" r="3" fill="var(--color-floral)" fill-opacity="0.10"/>
+    </g>
+  </svg>
+
+  <!-- Floral corner: top-right (smaller) -->
+  <svg class="floral-corner floral-tr" viewBox="0 0 300 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="var(--color-floral)" stroke-width="0.8" fill="none" opacity="0.7">
+      <path d="M0 0 C40 60 30 120 50 180 C65 220 90 240 120 260"/>
+      <path d="M50 180 C30 170 10 150 5 125 C0 100 20 85 40 95 C55 102 55 125 50 180" fill="var(--color-floral)" fill-opacity="0.05"/>
+      <path d="M50 180 C70 165 95 155 110 130 C120 112 108 95 90 100 C75 104 65 130 50 180" fill="var(--color-floral)" fill-opacity="0.05"/>
+      <circle cx="50" cy="178" r="3.5" fill="var(--color-floral)" fill-opacity="0.1"/>
+    </g>
+  </svg>
+
+  <!-- Floral corner: bottom-left (smaller) -->
+  <svg class="floral-corner floral-bl" viewBox="0 0 300 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="var(--color-floral)" stroke-width="0.8" fill="none" opacity="0.7">
+      <path d="M0 0 C40 60 30 120 50 180 C65 220 90 240 120 260"/>
+      <path d="M50 180 C30 170 10 150 5 125 C0 100 20 85 40 95 C55 102 55 125 50 180" fill="var(--color-floral)" fill-opacity="0.05"/>
+      <path d="M50 180 C70 165 95 155 110 130 C120 112 108 95 90 100 C75 104 65 130 50 180" fill="var(--color-floral)" fill-opacity="0.05"/>
+      <circle cx="50" cy="178" r="3.5" fill="var(--color-floral)" fill-opacity="0.1"/>
+    </g>
+  </svg>
+
+  <div class="page">
+
+    <div class="hero-bg">
+      <div class="hero-slide"></div>
+      <div class="hero-slide"></div>
+      <div class="hero-slide"></div>
+      <div class="header">
+        <h1>Marija <span class="amp">&</span> Milan</h1>
+        <div class="ornament">
+          <span class="ornament-line"></span>
+          <span class="ornament-icon">&#10044;</span>
+          <span class="ornament-line"></span>
+        </div>
+        <p class="header-sub">
+          Sa velikim zadovoljstvom vas pozivamo da budete deo našeg posebnog dana
+          i da zajedno sa nama proslavite ljubav, radost i početak novog poglavlja.
+        </p>
+        <p class="header-date">20. jun 2026.</p>
+        <p class="header-location">
+          <span class="location-name">ISKRA svečana sala</span>
+          <span class="location-address">Petrovaradin, Bukovački put 100</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="page-content">
+    <div class="event-info">
+      <div class="event-item">
+        <div class="event-item-icon">&#x1F54A;</div>
+        <div class="event-item-title">Skup gostiju</div>
+        <div class="event-item-detail">16:00h</div>
+      </div>
+      <div class="event-divider"></div>
+      <div class="event-item">
+        <div class="event-item-icon">&#x1F48D;</div>
+        <div class="event-item-title">Građansko venčanje</div>
+        <div class="event-item-detail">17:30h</div>
+      </div>
+    </div>
+
+    <div class="form-title">
+      <h2>Molimo Vas da potvrdite svoj dolazak</h2>
+      <p>najkasnije do 1. maja 2026.</p>
+    </div>
+
+    <div class="rsvp-form" id="rsvp-form-container">
+      <!-- ACTION: Replace YOUR_FORM_ID with your Formspree form ID -->
+      <form id="rsvp-form" action="https://formspree.io/f/xreyvayj" method="POST">
+
+        <div class="form-group">
+          <label for="name">Ime i prezime</label>
+          <input type="text" id="name" name="name" required placeholder="Vaše ime i prezime">
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Telefon</label>
+          <input type="tel" id="phone" name="phone" placeholder="Broj telefona">
+        </div>
+
+        <div class="form-group">
+          <label>Da li dolazite?</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" id="attending-yes" name="attending" value="Dolazim" required>
+              <label for="attending-yes">Dolazim</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="attending-no" name="attending" value="Ne dolazim">
+              <label for="attending-no">Nažalost ne dolazim</label>
+            </div>
+          </div>
+        </div>
+
+        <div id="details-section" style="display:none">
+          <div class="form-group">
+            <label>Broj gostiju</label>
+            <div class="pill-group">
+              <div class="radio-option"><input type="radio" id="guests-1" name="guests" value="1" checked><label for="guests-1">1</label></div>
+              <div class="radio-option"><input type="radio" id="guests-2" name="guests" value="2"><label for="guests-2">2</label></div>
+              <div class="radio-option"><input type="radio" id="guests-3" name="guests" value="3"><label for="guests-3">3</label></div>
+              <div class="radio-option"><input type="radio" id="guests-4" name="guests" value="4"><label for="guests-4">4</label></div>
+              <div class="radio-option"><input type="radio" id="guests-5" name="guests" value="5"><label for="guests-5">5</label></div>
+              <div class="radio-option"><input type="radio" id="guests-6" name="guests" value="6"><label for="guests-6">6</label></div>
+            </div>
+          </div>
+
+          <div class="guests-section" id="guests-section"></div>
+        </div>
+
+        <div class="form-group" style="border-top: 1px solid var(--color-border); padding-top: 1.5rem; margin-top: 0.5rem">
+          <label for="note">Napomena</label>
+          <textarea id="note" name="note" placeholder="Vaš komentar"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-submit">Pošalji potvrdu</button>
+      </form>
+
+      <div class="form-success" id="form-success">
+        <div class="checkmark">&#10047;</div>
+        <h3>Hvala vam!</h3>
+        <p>Vaša potvrda je uspešno poslata.<br>Radujemo se vašem dolasku!</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      &#10044;&ensp;Marija & Milan&ensp;&#10044;
+    </div>
+
+    </div><!-- /page-content -->
+  </div>
+
+  <script>
+    const detailsSection = document.getElementById('details-section');
+    const guestsSection = document.getElementById('guests-section');
+    const form = document.getElementById('rsvp-form');
+    const successMsg = document.getElementById('form-success');
+
+    const mealOptions = [
+      { value: 'Standard', label: 'Standard' },
+      { value: 'Vegetarijanska', label: 'Vegetarijanska' },
+      { value: 'Posna', label: 'Posna' },
+    ];
+
+    document.querySelectorAll('input[name="attending"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        detailsSection.style.display = radio.value === 'Dolazim' ? 'block' : 'none';
+        if (radio.value === 'Dolazim') renderGuestBlocks();
+      });
+    });
+
+    document.querySelectorAll('input[name="guests"]').forEach(radio => {
+      radio.addEventListener('change', renderGuestBlocks);
+    });
+
+    document.getElementById('name').addEventListener('input', () => {
+      const guest1Name = guestsSection.querySelector('.guest-block[data-guest="1"] input[type="text"]');
+      if (guest1Name) guest1Name.value = document.getElementById('name').value;
+    });
+
+    function getGuestCount() {
+      return parseInt(document.querySelector('input[name="guests"]:checked')?.value) || 1;
+    }
+
+    function renderGuestBlocks() {
+      const count = getGuestCount();
+      const existing = guestsSection.querySelectorAll('.guest-block');
+      const saved = {};
+
+      existing.forEach(block => {
+        const num = parseInt(block.dataset.guest);
+        const checkedMeal = block.querySelector('input[type="radio"]:checked');
+        const isChild = block.querySelector('input[type="checkbox"]')?.checked || false;
+        const nameVal = block.querySelector('input[type="text"]')?.value || '';
+        saved[num] = { meal: checkedMeal?.value || 'Standard', child: isChild, name: nameVal };
+      });
+
+      guestsSection.innerHTML = '';
+
+      for (let i = 1; i <= count; i++) {
+        const block = document.createElement('div');
+        block.className = 'guest-block';
+        block.dataset.guest = i;
+        const prev = saved[i] || { meal: 'Standard', child: false, name: '' };
+        const isFirst = i === 1;
+        const nameValue = isFirst ? document.getElementById('name').value : prev.name;
+
+        block.innerHTML = `
+          <div class="guest-block-header">
+            <span class="guest-block-title">Gost ${i}</span>
+            ${isFirst ? '' : `<label class="child-check">
+              <input type="checkbox" name="child_guest_${i}" value="Da" ${prev.child ? 'checked' : ''}>
+              Dete ispod 5 godina
+            </label>`}
+          </div>
+          <div class="form-group" style="margin-bottom:0.75rem">
+            <input type="text" name="name_guest_${i}" placeholder="Ime i prezime" value="${nameValue.replace(/"/g, '&quot;')}" ${isFirst ? 'readonly tabindex="-1" style="margin-bottom:0;opacity:0.6;cursor:not-allowed"' : ''}>
+          </div>
+          <div class="meal-options">
+            ${mealOptions.map(opt => `
+              <div class="radio-option">
+                <input type="radio" id="meal-${i}-${opt.value}" name="meal_guest_${i}" value="${opt.value}" ${opt.value === prev.meal ? 'checked' : ''}>
+                <label for="meal-${i}-${opt.value}">${opt.label}</label>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        guestsSection.appendChild(block);
+      }
+
+      guestsSection.classList.toggle('visible', count > 0);
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          form.style.display = 'none';
+          successMsg.classList.add('visible');
+        } else {
+          alert('Došlo je do greške. Pokušajte ponovo.');
+        }
+      } catch {
+        alert('Došlo je do greške. Proverite internet konekciju.');
+      }
+    });
+  </script>
+</body>
+</html>
