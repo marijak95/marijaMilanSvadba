@@ -23,6 +23,10 @@
       --color-card: #fffefb;
       --color-border: #e4dbd0;
       --color-floral: #b8975a;
+      --color-taupe: #A39788;
+      --color-taupe-light: #c4b5a3;
+      --color-warm-beige: #d4c8b7;
+      --color-soft-sand: #f0e8dc;
       --font-display: 'Cormorant Garamond', Georgia, serif;
       --font-sans: 'Inter', system-ui, sans-serif;
     }
@@ -128,6 +132,7 @@
     .hero-bg .header .ornament-line { background: rgba(255,255,255,0.4); }
     .hero-bg .header .header-sub { color: rgba(255,255,255,0.85); }
     .hero-bg .header .header-date { color: #fff; border-color: rgba(255,255,255,0.35); }
+    .hero-bg .header .header-location { color: #fff; border-color: rgba(255,255,255,0.35); }
     .hero-bg .header .location-name { color: #fff; font-size: 1.5rem;  }
     .hero-bg .header .location-address { color: #fff;  }
 
@@ -280,6 +285,7 @@
       margin-top: 1.4rem;
       line-height: 1.7;
       letter-spacing: 0.06em;
+      padding: 0.6rem 2rem;
     }
 
     .header-location .location-name {
@@ -508,7 +514,6 @@
       font-family: var(--font-sans);
       font-weight: 500;
       text-decoration: none;
-      border-radius: 20px;
       transition: all 0.2s;
       letter-spacing: 0.05em;
       text-transform: uppercase;
@@ -518,7 +523,7 @@
     }
 
     .calendar-btn:hover {
-      border-color: rgba(255, 255, 255, 0.8);
+      border-color: rgba(138, 128, 120, 0.4);
       background: rgba(255, 255, 255, 0.1);
       transform: translateY(-2px);
     }
@@ -557,7 +562,7 @@
     .rsvp-form {
       width: 100%;
       max-width: 540px;
-      background: var(--color-card);
+      background: linear-gradient(135deg, var(--color-card) 0%, var(--color-soft-sand) 100%);
       border: 1px solid var(--color-border);
       border-radius: 4px;
       padding: 2.5rem 2rem;
@@ -647,8 +652,8 @@
     }
 
     .radio-option input:checked + label {
-      border-color: var(--color-accent);
-      background: var(--color-accent);
+      border-color: var(--color-taupe);
+      background: var(--color-taupe);
       color: #fff;
     }
 
@@ -703,7 +708,7 @@
 
     .child-check input[type="checkbox"] {
       width: auto;
-      accent-color: var(--color-accent);
+      accent-color: #A39788;
       cursor: pointer;
     }
 
@@ -739,14 +744,14 @@
     }
 
     .btn-primary {
-      background: var(--color-accent);
+      background: #A39788;
       color: #fff;
     }
 
     .btn-primary:hover {
-      background: var(--color-accent-dark);
+      background: var(--color-taupe-light);
       transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(158, 126, 90, 0.25);
+      box-shadow: 0 6px 20px rgba(163, 151, 136, 0.25);
     }
 
     .btn-submit {
@@ -967,7 +972,7 @@
         </p>
         <p class="header-date">20. jun 2026.</p>
         <p class="header-location">
-          <span class="location-name">ISKRA svečana sala</span>
+          <span class="location-name">📍 ISKRA svečana sala</span>
           <span class="location-address">Petrovaradin, Bukovački put 100</span>
         </p>
       </div>
