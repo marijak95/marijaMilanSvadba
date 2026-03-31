@@ -218,7 +218,7 @@
     .header h1 {
       font-family: var(--font-display);
       font-weight: 300;
-      font-size: clamp(2.4rem, 10vw, 7rem);
+      font-size: clamp(2.8rem, 10vw, 8rem);
       line-height: 0.95;
       color: var(--color-text);
       letter-spacing: -0.01em;
@@ -324,9 +324,8 @@
     .countdown-title {
       font-family: var(--font-display);
       font-size: 1.3rem;
-      font-weight: 500;
-      color: rgba(138, 128, 120, 0.9);
-      text-shadow: 0 0 12px rgba(255,255,255,0.8), 0 0 4px rgba(255,255,255,0.9);
+      font-weight: 600;
+      color: whitesmoke;
       text-align: center;
       width: 100%;
       margin-bottom: 1.2rem;
@@ -462,6 +461,10 @@
     }
 
     .location-section iframe {
+      width: 100%;
+      max-width: 100%;
+      display: block;
+      margin: 0 auto;
       border-radius: 4px;
       box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
     }
@@ -474,6 +477,8 @@
         font-size: 1.3rem;
       }
       .location-section iframe {
+        width: 100%;
+        max-width: 100%;
         height: 300px !important;
       }
     }
@@ -862,7 +867,7 @@
       .rsvp-form { padding: 1.8rem 1.2rem; }
       .rsvp-form::before { inset: 4px; }
       .header { margin-bottom: 2rem; margin-top: 1.5rem; }
-      .header h1 { font-size: clamp(1.8rem, 9vw, 4rem); white-space: normal; text-align: center; }
+      .header h1 { font-size: clamp(2rem, 9vw, 5rem); white-space: normal; text-align: center; }
       .header-sub { font-size: 1.05rem; line-height: 1.7; }
       .header-date { font-size: 1.4rem; padding: 0.5rem 1.5rem; margin-top: 1.3rem; }
       .ornament { margin: 1rem auto; }
@@ -1030,7 +1035,7 @@
     <!-- Google Maps Section -->
       <div class="location-section">
         <h2>Lokacija</h2>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d888.2516003019175!2d19.890177013834485!3d45.21871403212545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475b0500465ae98b%3A0xb6dd3343703aaabb!2sIskra%20Event%20Centar!5e0!3m2!1sen!2srs!4v1774297507956!5m2!1sen!2srs" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d888.2516003019175!2d19.890177013834485!3d45.21871403212545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475b0500465ae98b%3A0xb6dd3343703aaabb!2sIskra%20Event%20Centar!5e0!3m2!1sen!2srs!4v1774297507956!5m2!1sen!2srs" width="450" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
 
     <div class="form-title">
@@ -1061,7 +1066,7 @@
             </div>
             <div class="radio-option">
               <input type="radio" id="attending-no" name="attending" value="Ne dolazim">
-              <label for="attending-no">Nažalost ne dolazim</label>
+              <label for="attending-no">Ne dolazim</label>
             </div>
           </div>
         </div>
@@ -1076,6 +1081,7 @@
               <div class="radio-option"><input type="radio" id="guests-4" name="guests" value="4"><label for="guests-4">4</label></div>
               <div class="radio-option"><input type="radio" id="guests-5" name="guests" value="5"><label for="guests-5">5</label></div>
               <div class="radio-option"><input type="radio" id="guests-6" name="guests" value="6"><label for="guests-6">6</label></div>
+              <div class="radio-option"><input type="radio" id="guests-7" name="guests" value="7"><label for="guests-7">7</label></div>
             </div>
           </div>
 
@@ -1111,9 +1117,8 @@
     const successMsg = document.getElementById('form-success');
 
     const mealOptions = [
-      { value: 'Standard', label: 'Standard' },
-      { value: 'Vegetarijanska', label: 'Vegetarijanska' },
-      { value: 'Posna', label: 'Posna' },
+      { value: 'Standard', label: 'Standard meni' },
+      { value: 'Posna', label: 'Posni meni' },
     ];
 
     document.querySelectorAll('input[name="attending"]').forEach(radio => {
