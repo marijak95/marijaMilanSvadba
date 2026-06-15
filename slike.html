@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marija & Milan — Podelite slike</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --color-bg: #f9f6f1;
+      --color-text: #2c2c2c;
+      --color-accent: #9e7e5a;
+      --color-accent-light: #c4a882;
+      --color-gold: #b8975a;
+      --color-gold-light: #d4bc8e;
+      --color-muted: #8a8078;
+      --color-card: #fffefb;
+      --color-border: #e4dbd0;
+      --color-floral: #b8975a;
+      --color-taupe: #A39788;
+      --color-taupe-light: #c4b5a3;
+      --color-soft-sand: #f0e8dc;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 20%, rgba(184, 151, 90, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 80%, rgba(184, 151, 90, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2.5rem 1.5rem 2rem;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      align-self: flex-start;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      color: var(--color-muted);
+      text-decoration: none;
+      margin-bottom: 2rem;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--color-gold); }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(2rem, 8vw, 3rem);
+      letter-spacing: 0.08em;
+      color: var(--color-text);
+    }
+
+    .header h1 .amp {
+      font-style: italic;
+      color: var(--color-gold);
+      font-size: 0.65em;
+      margin: 0 0.15em;
+    }
+
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem auto;
+      color: var(--color-gold-light);
+    }
+
+    .ornament-line {
+      width: 50px;
+      height: 1px;
+      background: var(--color-gold-light);
+    }
+
+    .header-sub {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--color-muted);
+      max-width: 420px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .upload-card {
+      width: 100%;
+      background: linear-gradient(135deg, var(--color-card) 0%, var(--color-soft-sand) 100%);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: 2rem 1.75rem;
+      position: relative;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .upload-card::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid var(--color-border);
+      border-radius: 2px;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.03em;
+    }
+
+    .form-group input[type="text"] {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border: 1px solid var(--color-border);
+      border-radius: 3px;
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      background: var(--color-bg);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group input[type="text"]:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(158, 126, 90, 0.08);
+    }
+
+    .drop-zone {
+      border: 2px dashed var(--color-border);
+      border-radius: 4px;
+      padding: 2rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: rgba(255, 255, 255, 0.45);
+      position: relative;
+      z-index: 1;
+    }
+
+    .drop-zone:hover,
+    .drop-zone.dragover {
+      border-color: var(--color-accent-light);
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .drop-zone-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.7;
+    }
+
+    .drop-zone p {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--color-text);
+    }
+
+    .drop-zone small {
+      display: block;
+      margin-top: 0.4rem;
+      color: var(--color-muted);
+      font-size: 0.82rem;
+    }
+
+    .drop-zone input {
+      display: none;
+    }
+
+    .preview-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+      gap: 0.5rem;
+      margin-top: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .preview-item {
+      aspect-ratio: 1;
+      border-radius: 3px;
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      position: relative;
+    }
+
+    .preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .preview-item .remove-btn {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 20px;
+      height: 20px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.55);
+      color: #fff;
+      font-size: 12px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .progress-bar {
+      height: 6px;
+      background: var(--color-border);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 1rem;
+      display: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    .progress-bar.visible { display: block; }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--color-taupe);
+      transition: width 0.3s ease;
+    }
+
+    .status-text {
+      margin-top: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--color-muted);
+      text-align: center;
+      min-height: 1.2em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn {
+      display: inline-block;
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 3px;
+      background: var(--color-taupe);
+      color: #fff;
+      margin-top: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn:hover:not(:disabled) {
+      background: var(--color-taupe-light);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(163, 151, 136, 0.25);
+    }
+
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2.5rem 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-success.visible { display: block; }
+
+    .form-success .checkmark {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--color-gold);
+    }
+
+    .form-success h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 0.75rem;
+    }
+
+    .form-success p {
+      color: var(--color-muted);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 1rem 0.5rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--color-accent-light);
+    }
+
+    .setup-warning {
+      background: #fff8e8;
+      border: 1px solid #e8d5a8;
+      border-radius: 4px;
+      padding: 0.85rem 1rem;
+      font-size: 0.82rem;
+      color: #7a6535;
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 600px) {
+      .page { padding: 1.5rem 1rem; }
+      .upload-card { padding: 1.5rem 1.1rem; }
+      .upload-card::before { inset: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <a href="index.html" class="back-link">← Nazad na pozivnicu</a>
+
+    <div class="header">
+      <h1>Marija <span class="amp">&</span> Milan</h1>
+      <div class="ornament">
+        <span class="ornament-line"></span>
+        <span>📷</span>
+        <span class="ornament-line"></span>
+      </div>
+      <p class="header-sub">
+        Podelite sa nama fotografije sa venčanja — direktno sa telefona.
+        Hvala vam što pomažete da sačuvamo lepe uspomene!
+      </p>
+    </div>
+
+    <div class="upload-card" id="upload-card">
+      <div class="setup-warning" id="setup-warning" hidden>
+        Upload još nije podešen. U fajlu <strong>slike.html</strong> unesite URL Google Apps Script-a
+        (vidi <strong>google-drive-upload.gs</strong> za uputstvo).
+      </div>
+
+      <form id="upload-form">
+        <div class="form-group">
+          <label for="uploader-name">Vaše ime (opciono)</label>
+          <input type="text" id="uploader-name" placeholder="Ime i prezime">
+        </div>
+
+        <div class="drop-zone" id="drop-zone">
+          <div class="drop-zone-icon">📸</div>
+          <p>Dodirnite da izaberete slike</p>
+          <small>JPG, PNG, HEIC — više slika odjednom</small>
+          <input type="file" id="file-input" accept="image/*" multiple capture="environment">
+        </div>
+
+        <div class="preview-list" id="preview-list"></div>
+
+        <div class="progress-bar" id="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <p class="status-text" id="status-text"></p>
+
+        <button type="submit" class="btn" id="submit-btn" disabled>Pošalji slike</button>
+      </form>
+
+      <div class="form-success" id="form-success">
+        <div class="checkmark">&#10047;</div>
+        <h3>Hvala vam!</h3>
+        <p>Vaše fotografije su uspešno poslate.<br>Radujemo se što ćemo ih pogledati!</p>
+        <button type="button" class="btn" id="upload-more-btn" style="margin-top: 1.5rem;">Pošalji još slika</button>
+      </div>
+    </div>
+
+    <div class="footer">&#10044;&ensp;Marija & Milan&ensp;&#10044;</div>
+  </div>
+
+  <script>
+    // ============================================================
+    // PODESITE OVO nakon deploy-a Google Apps Script-a:
+    const UPLOAD_SCRIPT_URL = 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+    const UPLOAD_TOKEN = 'PASTE_YOUR_SECRET_TOKEN_HERE';
+    // ============================================================
+
+    const isConfigured = !UPLOAD_SCRIPT_URL.includes('PASTE_YOUR') && !UPLOAD_TOKEN.includes('PASTE_YOUR');
+
+    const form = document.getElementById('upload-form');
+    const fileInput = document.getElementById('file-input');
+    const dropZone = document.getElementById('drop-zone');
+    const previewList = document.getElementById('preview-list');
+    const progressBar = document.getElementById('progress-bar');
+    const progressFill = document.getElementById('progress-fill');
+    const statusText = document.getElementById('status-text');
+    const submitBtn = document.getElementById('submit-btn');
+    const successMsg = document.getElementById('form-success');
+    const uploadMoreBtn = document.getElementById('upload-more-btn');
+    const setupWarning = document.getElementById('setup-warning');
+
+    let selectedFiles = [];
+
+    if (!isConfigured) {
+      setupWarning.hidden = false;
+    }
+
+    function updateSubmitState() {
+      submitBtn.disabled = selectedFiles.length === 0 || !isConfigured;
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function renderPreviews() {
+      previewList.innerHTML = '';
+      selectedFiles.forEach((file, index) => {
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        img.alt = file.name;
+
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'remove-btn';
+        removeBtn.textContent = '×';
+        removeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          URL.revokeObjectURL(img.src);
+          selectedFiles.splice(index, 1);
+          renderPreviews();
+          updateSubmitState();
+        });
+
+        item.appendChild(img);
+        item.appendChild(removeBtn);
+        previewList.appendChild(item);
+      });
+      updateSubmitState();
+    }
+
+    function addFiles(fileList) {
+      const images = Array.from(fileList).filter(f => f.type.startsWith('image/'));
+      if (!images.length) {
+        alert('Molimo izaberite slike (JPG, PNG, HEIC...).');
+        return;
+      }
+      selectedFiles = selectedFiles.concat(images);
+      renderPreviews();
+    }
+
+    dropZone.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) addFiles(fileInput.files);
+      fileInput.value = '';
+    });
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
+    });
+
+    async function uploadFile(file, uploaderName) {
+      const base64 = await fileToBase64(file);
+      const response = await fetch(UPLOAD_SCRIPT_URL, {
+        method: 'POST',
+        redirect: 'follow',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          token: UPLOAD_TOKEN,
+          fileName: file.name,
+          mimeType: file.type || 'image/jpeg',
+          data: base64,
+          uploaderName: uploaderName
+        })
+      });
+
+      const result = await response.json();
+      if (!result.ok) throw new Error(result.error || 'Upload nije uspeo');
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!selectedFiles.length || !isConfigured) return;
+
+      const uploaderName = document.getElementById('uploader-name').value.trim();
+      const total = selectedFiles.length;
+
+      submitBtn.disabled = true;
+      progressBar.classList.add('visible');
+
+      try {
+        for (let i = 0; i < total; i++) {
+          statusText.textContent = `Šaljem sliku ${i + 1} od ${total}...`;
+          progressFill.style.width = `${Math.round((i / total) * 100)}%`;
+          await uploadFile(selectedFiles[i], uploaderName);
+        }
+
+        progressFill.style.width = '100%';
+        statusText.textContent = '';
+        form.style.display = 'none';
+        successMsg.classList.add('visible');
+      } catch (err) {
+        alert('Došlo je do greške pri slanju: ' + (err.message || 'pokušajte ponovo.'));
+        submitBtn.disabled = false;
+      } finally {
+        progressBar.classList.remove('visible');
+        progressFill.style.width = '0%';
+      }
+    });
+
+    uploadMoreBtn.addEventListener('click', () => {
+      selectedFiles = [];
+      previewList.innerHTML = '';
+      statusText.textContent = '';
+      form.style.display = 'block';
+      successMsg.classList.remove('visible');
+      updateSubmitState();
+    });
+  </script>
+</body>
+</html>
