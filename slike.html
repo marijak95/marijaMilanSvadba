@@ -350,19 +350,6 @@
       color: var(--color-accent-light);
     }
 
-    .setup-warning {
-      background: #fff8e8;
-      border: 1px solid #e8d5a8;
-      border-radius: 4px;
-      padding: 0.85rem 1rem;
-      font-size: 0.82rem;
-      color: #7a6535;
-      margin-bottom: 1.25rem;
-      line-height: 1.5;
-      position: relative;
-      z-index: 1;
-    }
-
     @media (max-width: 600px) {
       .page { padding: 1.5rem 1rem; }
       .upload-card { padding: 1.5rem 1.1rem; }
@@ -388,11 +375,6 @@
     </div>
 
     <div class="upload-card" id="upload-card">
-      <div class="setup-warning" id="setup-warning" hidden>
-        Upload još nije podešen. U fajlu <strong>slike.html</strong> unesite URL Google Apps Script-a
-        (vidi <strong>google-drive-upload.gs</strong> za uputstvo).
-      </div>
-
       <form id="upload-form">
         <div class="form-group">
           <label for="uploader-name">Vaše ime (opciono)</label>
@@ -401,9 +383,9 @@
 
         <div class="drop-zone" id="drop-zone">
           <div class="drop-zone-icon">📸</div>
-          <p>Dodirnite da izaberete slike</p>
+          <p>Dodirnite da izaberete slike iz galerije</p>
           <small>JPG, PNG, HEIC — više slika odjednom</small>
-          <input type="file" id="file-input" accept="image/*" multiple capture="environment">
+          <input type="file" id="file-input" accept="image/*" multiple>
         </div>
 
         <div class="preview-list" id="preview-list"></div>
@@ -434,8 +416,6 @@
     const UPLOAD_TOKEN = 'randomString';
     // ============================================================
 
-    const isConfigured = !UPLOAD_SCRIPT_URL.includes('PASTE_YOUR') && !UPLOAD_TOKEN.includes('PASTE_YOUR');
-
     const form = document.getElementById('upload-form');
     const fileInput = document.getElementById('file-input');
     const dropZone = document.getElementById('drop-zone');
@@ -446,16 +426,11 @@
     const submitBtn = document.getElementById('submit-btn');
     const successMsg = document.getElementById('form-success');
     const uploadMoreBtn = document.getElementById('upload-more-btn');
-    const setupWarning = document.getElementById('setup-warning');
 
     let selectedFiles = [];
 
-    if (!isConfigured) {
-      setupWarning.hidden = false;
-    }
-
     function updateSubmitState() {
-      submitBtn.disabled = selectedFiles.length === 0 || !isConfigured;
+      submitBtn.disabled = selectedFiles.length === 0;
     }
 
     function fileToBase64(file) {
@@ -547,7 +522,7 @@
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (!selectedFiles.length || !isConfigured) return;
+      if (!selectedFiles.length) return;
 
       const uploaderName = document.getElementById('uploader-name').value.trim();
       const total = selectedFiles.length;
