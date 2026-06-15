@@ -209,7 +209,15 @@
     }
 
     .drop-zone input {
-      display: none;
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     .preview-list {
@@ -381,12 +389,12 @@
           <input type="text" id="uploader-name" placeholder="Ime i prezime">
         </div>
 
-        <div class="drop-zone" id="drop-zone">
+        <label class="drop-zone" id="drop-zone" for="file-input">
           <div class="drop-zone-icon">📸</div>
           <p>Dodirnite da izaberete slike iz galerije</p>
           <small>JPG, PNG, HEIC — više slika odjednom</small>
-          <input type="file" id="file-input" accept="image/*" multiple>
-        </div>
+          <input type="file" id="file-input" accept="image/jpeg,image/png,image/heic,image/heif,image/webp,.heic,.heif" multiple>
+        </label>
 
         <div class="preview-list" id="preview-list"></div>
 
@@ -472,7 +480,9 @@
     }
 
     function addFiles(fileList) {
-      const images = Array.from(fileList).filter(f => f.type.startsWith('image/'));
+      const images = Array.from(fileList).filter(f =>
+        f.type.startsWith('image/') || /\.(jpe?g|png|heic|heif|webp)$/i.test(f.name)
+      );
       if (!images.length) {
         alert('Molimo izaberite slike (JPG, PNG, HEIC...).');
         return;
@@ -480,13 +490,6 @@
       selectedFiles = selectedFiles.concat(images);
       renderPreviews();
     }
-
-    dropZone.addEventListener('click', () => fileInput.click());
-
-    fileInput.addEventListener('change', () => {
-      if (fileInput.files.length) addFiles(fileInput.files);
-      fileInput.value = '';
-    });
 
     dropZone.addEventListener('dragover', (e) => {
       e.preventDefault();
@@ -499,6 +502,11 @@
       e.preventDefault();
       dropZone.classList.remove('dragover');
       if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
+    });
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) addFiles(fileInput.files);
+      fileInput.value = '';
     });
 
     async function uploadFile(file, uploaderName) {

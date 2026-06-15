@@ -1,15 +1,13 @@
 /**
  * Google Apps Script — upload slika u Google Drive folder
  *
- * SETUP (jednom):
- * 1. Napravite folder na Google Drive-u (npr. "Venčanje — gostiju slike")
- * 2. Otvorite script.google.com → New project
- * 3. Zalepite ovaj kod, podesite FOLDER_ID i UPLOAD_TOKEN ispod
- * 4. Deploy → New deployment → Web app
- *    - Execute as: Me
- *    - Who has access: Anyone
- * 5. Kopirajte Web app URL u slike.html (UPLOAD_SCRIPT_URL)
- * 6. UPLOAD_TOKEN mora biti isti u oba fajla (nasumičan string, npr. iz password generatora)
+ * SETUP:
+ * 1. Napravite folder na Google Drive-u
+ * 2. Kopirajte SAMO ID iz URL-a: drive.google.com/drive/folders/XXXXXXXX
+ * 3. Podesite FOLDER_ID i UPLOAD_TOKEN ispod (isti token kao u slike.html)
+ * 4. Pokrenite testFolderAccess() iz editora (Run) i odobrite pristup Drive-u
+ * 5. Deploy → New deployment → Web app (Execute as: Me, Anyone)
+ * 6. Nakon svake izmene koda: Deploy → Manage deployments → Edit → New version
  */
 
 const FOLDER_ID = 'PASTE_YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE';
@@ -31,7 +29,7 @@ function doPost(e) {
       return jsonResponse({ ok: false, error: 'Nedostaje fajl' });
     }
 
-    const folder = DriveApp.getFolderById(FOLDER_ID);
+    const folder = getUploadFolder();
     const mimeType = payload.mimeType || 'image/jpeg';
     const blob = Utilities.newBlob(
       Utilities.base64Decode(payload.data),
@@ -43,12 +41,39 @@ function doPost(e) {
 
     return jsonResponse({ ok: true });
   } catch (err) {
-    return jsonResponse({ ok: false, error: String(err) });
+    return jsonResponse({ ok: false, error: String(err.message || err) });
   }
 }
 
 function doGet() {
   return jsonResponse({ ok: true, message: 'Upload servis je aktivan' });
+}
+
+function getUploadFolder() {
+  const folderId = extractFolderId(FOLDER_ID);
+
+  if (!folderId || folderId.includes('PASTE_YOUR')) {
+    throw new Error('FOLDER_ID nije podešen. Unesite ID Google Drive foldera u script.');
+  }
+
+  try {
+    return DriveApp.getFolderById(folderId);
+  } catch (err) {
+    throw new Error(
+      'Ne mogu da pristupim folderu. Proverite FOLDER_ID, pokrenite testFolderAccess() i odobrite pristup Drive-u.'
+    );
+  }
+}
+
+function extractFolderId(value) {
+  const trimmed = String(value || '').trim();
+  const match = trimmed.match(/[-\w]{25,}/);
+  return match ? match[0] : trimmed;
+}
+
+function testFolderAccess() {
+  const folder = getUploadFolder();
+  Logger.log('OK — folder: ' + folder.getName());
 }
 
 function sanitizeFileName(originalName, uploaderName) {
